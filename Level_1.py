@@ -1,5 +1,8 @@
 import pygame
 
+cursor_colour = (0, 49, 83)
+window_height = 600
+window_width = 800
 
 class Location:
 
@@ -14,13 +17,26 @@ class Location:
         self.adjacent = adjacent  # list of locations that can be reached from this location
 
 
+    def draw(self, surface):
+        pygame.self.background.blit(0, 0)
+
+
+
 class Item:
 
-    def __init__(self, name, location):
+    def __init__(self, name, location, image, hitbox):
 
         self.name = name
 
-        self.location = location  # this could be a rectangle
+        self.location = location
+
+        self.image = image
+
+        self.hitbox = hitbox  # this could be a rectangle
+
+
+    def draw(self, surface):
+
 
 
 class Character:
@@ -57,9 +73,18 @@ class Cursor:
 
     def draw(self, surface):
         # method to draw cursor to surface
+        pygame.draw.line(surface, cursor_colour, (self.location[0], 0), (self.location[0], window_height))
+        pygame.draw.line(surface, cursor_colour, (0, self.location[1]), (window_width, self.location[1]))
+        pygame.draw.rect(surface, cursor_colour, (self.location[0] + 3, self.location[1] + 3, 7, 7), 1)
 
 
-    def check_item(self, location):
+    def check_item(self, item):
         # method to check if the cursor is over an item
 
+trin_backs =  Location("Trinity Backs", pygame.image.load("Trin Backs.png", [], []))
+yuta_room = Location("Yuta's Room", pygame.image.load("Trinity Room.png"), [], [trin_backs])
+trin_backs.adjacent.append(yuta_room)
 
+pygame.init()
+
+win = pygame.display.init(window_width, window_height)
